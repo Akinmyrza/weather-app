@@ -32,7 +32,7 @@ export function getWeather(
     } catch (err) {
       dispatch({
         type: GetWeatherActionTypes.SET_ERROR,
-        error: err.message,
+        error: 'Error',
       });
     }
   };
