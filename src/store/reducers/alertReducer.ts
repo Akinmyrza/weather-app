@@ -5,7 +5,7 @@ const initialState: AlertState = {
   message: '',
 };
 
-export default (state = initialState, action: SetAlert): AlertState => {
+export default function alertReducer(state = initialState, action: SetAlert) {
   switch (action.type) {
     case GetWeatherActionTypes.SET_ALERT:
       return {
@@ -14,4 +14,4 @@ export default (state = initialState, action: SetAlert): AlertState => {
     default:
       return state;
   }
-};
+}
