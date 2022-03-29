@@ -1,12 +1,35 @@
+/* External dependencies */
+import { useDispatch, useSelector } from 'react-redux';
+
 /* Local dependencies */
+import Alert from './components/Alert';
+import { RootState } from './store';
 import Search from './components/Search';
+import { setAlert } from './store/actions/alertAction';
+import { setError } from './store/actions/weatherAction';
+import Weather from './components/Weather';
 import './App.css';
 
 export default function App() {
+  const dispatch = useDispatch();
+  const weatherData = useSelector((state: RootState) => state.weather.data);
+  const loading = useSelector((state: RootState) => state.weather.loading);
+  const error = useSelector((state: RootState) => state.weather.error);
+  const alertMsg = useSelector((state: RootState) => state.alert.message);
+
   return (
-    <div>
-      <h1>Weather App</h1>
-      <Search title={'Enter a City'} />
+    <div className='has-text-centered'>
+      <Search title='Enter city name and press search button' />
+      {loading ? (
+        <h2 className='is-size-3 py-2'>Loading...</h2>
+      ) : (
+        weatherData && <Weather data={weatherData} />
+      )}
+
+      {alertMsg && (
+        <Alert message={alertMsg} onClose={() => dispatch(setAlert(''))} />
+      )}
+      {error && <Alert message={error} onClose={() => dispatch(setError())} />}
     </div>
   );
 }
